@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MainView from "./main-view/MainView.component";
+import { Matrix } from "./dataStructure";
+
+import "./App.css";
 
 function App() {
+  let dim = 50;
+
+  let originalMatrix: Matrix;
+  originalMatrix = new Array(dim);
+
+  for (let i = 0; i < dim; i++) {
+    originalMatrix[i] = Array.from({ length: dim }, () =>
+      Math.floor(Math.random() * 2)
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainView originalMatrix={originalMatrix} />
     </div>
   );
 }
