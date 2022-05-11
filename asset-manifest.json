@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/neighbours-ts/static/css/main.4da31df7.css",
+    "main.js": "/neighbours-ts/static/js/main.ac44c822.js",
+    "static/js/787.85e1385b.chunk.js": "/neighbours-ts/static/js/787.85e1385b.chunk.js",
+    "index.html": "/neighbours-ts/index.html",
+    "main.4da31df7.css.map": "/neighbours-ts/static/css/main.4da31df7.css.map",
+    "main.ac44c822.js.map": "/neighbours-ts/static/js/main.ac44c822.js.map",
+    "787.85e1385b.chunk.js.map": "/neighbours-ts/static/js/787.85e1385b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4da31df7.css",
+    "static/js/main.ac44c822.js"
+  ]
+}
