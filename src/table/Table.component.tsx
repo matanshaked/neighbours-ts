@@ -1,5 +1,5 @@
 import TableRow from "../table-row/TableRow.component";
-import { Matrix } from "../dataStructure";
+import { Matrix } from "../DataStructures";
 
 import "./Table.style.scss";
 

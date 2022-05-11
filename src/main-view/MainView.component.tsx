@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import Table from "../table/Table.component";
 import Spinner from "../spinner/Spinner.component";
-import { Matrix } from "../dataStructure";
+import { Matrix } from "../DataStructures";
 
 import "./MainView.style.scss";
 
