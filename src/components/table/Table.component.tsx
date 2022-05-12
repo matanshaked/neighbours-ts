@@ -1,21 +1,24 @@
-import TableRow from "../table-row/TableRow.component";
+import { TableRow } from "../table-row/TableRow.component";
 import { Matrix } from "../../DataStructures";
 
 import "./Table.style.scss";
 
-const Table = ({ matrix }: { matrix: Matrix }) => {
+interface Props {
+  matrix: Matrix;
+  testid?: string;
+}
+
+export const Table = (props: Props): JSX.Element => {
   const tableStyle = {
-    width: 25 * matrix.length + "px",
+    width: 25 * props.matrix.length + "px",
   };
   return (
     <table style={tableStyle}>
-      <tbody>
-        {matrix.map((tableRowData, index) => (
+      <tbody data-testid={props.testid}>
+        {props.matrix.map((tableRowData, index) => (
           <TableRow key={index} tableRowData={tableRowData} />
         ))}
       </tbody>
     </table>
   );
 };
-
-export default Table;

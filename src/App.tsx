@@ -1,15 +1,15 @@
-import MainView from "./components/main-view/MainView.component";
+import { MainView } from "./components/main-view/MainView.component";
 import { Matrix } from "./DataStructures";
-import { Dim } from "./Consts";
+import { dim } from "./Config";
 
 import "./App.css";
 
-function App() {
+function App(): JSX.Element {
   let originalMatrix: Matrix;
-  originalMatrix = new Array(Dim);
+  originalMatrix = new Array(dim);
 
-  for (let i = 0; i < Dim; i++) {
-    originalMatrix[i] = Array.from({ length: Dim }, () =>
+  for (let i = 0; i < dim; i++) {
+    originalMatrix[i] = Array.from({ length: dim }, () =>
       Math.floor(Math.random() * 2)
     );
   }

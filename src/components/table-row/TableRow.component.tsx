@@ -1,11 +1,13 @@
-import TableData from "../table-data/TableData.component";
+import { TableData } from "../table-data/TableData.component";
 
-const TableRow = ({ tableRowData }: { tableRowData: number[] }) => (
+export const TableRow = ({
+  tableRowData,
+}: {
+  tableRowData: number[];
+}): JSX.Element => (
   <tr>
     {tableRowData.map((tableData, index) => (
       <TableData key={index} tableData={tableData} />
     ))}
   </tr>
 );
-
-export default TableRow;

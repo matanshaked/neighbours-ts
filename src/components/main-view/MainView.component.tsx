@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
 
-import Table from "../table/Table.component";
+import { Table } from "../table/Table.component";
 import Spinner from "../spinner/Spinner.component";
 import { Matrix } from "../../DataStructures";
+import {
+  liveNeighboursToBecomeLive,
+  minLiveNeighboursToLive,
+  maxLiveNeighboursToLive,
+} from "../../Config";
 
 import "./MainView.style.scss";
 
-const MainView = ({ originalMatrix }: { originalMatrix: Matrix }) => {
+export const MainView = ({
+  originalMatrix,
+}: {
+  originalMatrix: Matrix;
+}): JSX.Element => {
   const [isTickDone, setIsTickDone] = useState(false);
   const [newMatrix, setNewMatrix] = useState<Matrix>();
 
-  const checkNumberOfLiveNeighbours = (
+  const getNumberOfLiveNeighbours = (
     matrix: Matrix,
     row: number,
     col: number
-  ) => {
-    let liveNeighboursCount = 0;
-    const neighboursArr = new Array(8);
+  ): number => {
+    let liveNeighboursCount: number = 0;
+    const neighboursArr: number[] = new Array(8);
 
     neighboursArr[0] = matrix[row + 1]?.[col - 1];
     neighboursArr[1] = matrix[row]?.[col - 1];
@@ -41,8 +50,7 @@ const MainView = ({ originalMatrix }: { originalMatrix: Matrix }) => {
     row: number,
     col: number,
     numOfLiveNeighbours: number
-  ) => {
-    const minLiveNeighboursToLive = 2;
+  ): boolean => {
     return !!(
       matrix[row][col] && minLiveNeighboursToLive > numOfLiveNeighbours
     );
@@ -53,8 +61,7 @@ const MainView = ({ originalMatrix }: { originalMatrix: Matrix }) => {
     row: number,
     col: number,
     numOfLiveNeighbours: number
-  ) => {
-    const maxLiveNeighboursToLive = 3;
+  ): boolean => {
     return !!(
       matrix[row][col] && numOfLiveNeighbours > maxLiveNeighboursToLive
     );
@@ -65,8 +72,7 @@ const MainView = ({ originalMatrix }: { originalMatrix: Matrix }) => {
     row: number,
     col: number,
     numOfLiveNeighbours: number
-  ) => {
-    const liveNeighboursToBecomeLive = 3;
+  ): boolean => {
     return !!(
       !matrix[row][col] && numOfLiveNeighbours === liveNeighboursToBecomeLive
     );
@@ -75,38 +81,38 @@ const MainView = ({ originalMatrix }: { originalMatrix: Matrix }) => {
   useEffect(() => {
     const tick = (matrix: Matrix) => {
       //create new empty Matrix
-      const tempMatrix = new Array(matrix.length);
-      for (let j = 0; j < matrix.length; j++) {
-        tempMatrix[j] = Array.from({ length: matrix.length }, () => 0);
+      const newMatrixInstance: Matrix = new Array(matrix.length);
+      for (let i = 0; i < matrix.length; i++) {
+        newMatrixInstance[i] = Array.from({ length: matrix.length }, () => 0);
       }
 
       for (let row = 0; row < matrix.length; row++) {
         for (let col = 0; col < matrix[row].length; col++) {
           //set original state first (also for next generation)
-          tempMatrix[row][col] = matrix[row][col];
+          newMatrixInstance[row][col] = matrix[row][col];
           //get number of live neighbours
-          const numOfLiveNeighbours = checkNumberOfLiveNeighbours(
+          const numOfLiveNeighbours: number = getNumberOfLiveNeighbours(
             matrix,
             row,
             col
           );
           //check for underpopulation
           if (isUnderpopulation(matrix, row, col, numOfLiveNeighbours)) {
-            tempMatrix[row][col] = 0;
+            newMatrixInstance[row][col] = 0;
           }
 
           //check for overcrowded
           if (isOvercrowding(matrix, row, col, numOfLiveNeighbours)) {
-            tempMatrix[row][col] = 0;
+            newMatrixInstance[row][col] = 0;
           }
           //check for reproduction
           if (isReproduction(matrix, row, col, numOfLiveNeighbours)) {
-            tempMatrix[row][col] = 1;
+            newMatrixInstance[row][col] = 1;
           }
         }
       }
 
-      setNewMatrix(tempMatrix);
+      setNewMatrix(newMatrixInstance);
       setIsTickDone(true);
     };
 
@@ -118,9 +124,11 @@ const MainView = ({ originalMatrix }: { originalMatrix: Matrix }) => {
       <h1 className="header">Original Matrix:</h1>
       <Table matrix={originalMatrix} />
       <h1 className="header">After Matrix ticks:</h1>
-      {!isTickDone ? <Spinner /> : newMatrix && <Table matrix={newMatrix} />}
+      {!isTickDone ? (
+        <Spinner />
+      ) : (
+        newMatrix && <Table testid="results target table" matrix={newMatrix} />
+      )}
     </div>
   );
 };
-
-export default MainView;

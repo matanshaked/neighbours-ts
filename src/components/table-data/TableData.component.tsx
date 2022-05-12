@@ -1,8 +1,10 @@
 import "./TableData.style.scss";
 
-const TableData = ({ tableData }: { tableData: number }) => {
-  const classTableData = tableData ? "black-background" : "white-background";
+export const TableData = ({
+  tableData,
+}: {
+  tableData: number;
+}): JSX.Element => {
+  const classTableData = tableData ? "dark-mode" : "light-mode";
   return <td className={classTableData}>{tableData}</td>;
 };
-
-export default TableData;
