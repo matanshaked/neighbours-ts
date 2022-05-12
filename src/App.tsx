@@ -1,4 +1,4 @@
-import MainView from "./main-view/MainView.component";
+import MainView from "./components/main-view/MainView.component";
 import { Matrix } from "./DataStructures";
 import { Dim } from "./Consts";
 
