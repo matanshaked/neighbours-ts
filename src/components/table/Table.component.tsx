@@ -1,22 +1,19 @@
+import { v4 as uuidv4 } from "uuid";
+
 import { TableRow } from "../table-row/TableRow.component";
 import { Matrix } from "../../DataStructures";
 
 import "./Table.style.scss";
 
-interface Props {
-  matrix: Matrix;
-  testid?: string;
-}
-
-export const Table = (props: Props): JSX.Element => {
+export const Table = ({ matrix }: { matrix: Matrix }): JSX.Element => {
   const tableStyle = {
-    width: 25 * props.matrix.length + "px",
+    width: 25 * matrix.length + "px",
   };
   return (
     <table style={tableStyle}>
-      <tbody data-testid={props.testid}>
-        {props.matrix.map((tableRowData, index) => (
-          <TableRow key={index} tableRowData={tableRowData} />
+      <tbody>
+        {matrix.map((tableRowData) => (
+          <TableRow key={uuidv4()} tableRowData={tableRowData} />
         ))}
       </tbody>
     </table>

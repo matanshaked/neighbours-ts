@@ -4,10 +4,11 @@ import { Table } from "../table/Table.component";
 import Spinner from "../spinner/Spinner.component";
 import { Matrix } from "../../DataStructures";
 import {
-  liveNeighboursToBecomeLive,
-  minLiveNeighboursToLive,
-  maxLiveNeighboursToLive,
-} from "../../Config";
+  getNumberOfLiveNeighbours,
+  isUnderpopulation,
+  isOvercrowding,
+  isReproduction,
+} from "../../logic/MatrixLogic";
 
 import "./MainView.style.scss";
 
@@ -16,67 +17,8 @@ export const MainView = ({
 }: {
   originalMatrix: Matrix;
 }): JSX.Element => {
-  const [isTickDone, setIsTickDone] = useState(false);
+  const [isTickDone, setIsTickDone] = useState<boolean>(false);
   const [newMatrix, setNewMatrix] = useState<Matrix>();
-
-  const getNumberOfLiveNeighbours = (
-    matrix: Matrix,
-    row: number,
-    col: number
-  ): number => {
-    let liveNeighboursCount: number = 0;
-    const neighboursArr: number[] = new Array(8);
-
-    neighboursArr[0] = matrix[row + 1]?.[col - 1];
-    neighboursArr[1] = matrix[row]?.[col - 1];
-    neighboursArr[2] = matrix[row - 1]?.[col - 1];
-    neighboursArr[3] = matrix[row - 1]?.[col];
-    neighboursArr[4] = matrix[row - 1]?.[col + 1];
-    neighboursArr[5] = matrix[row]?.[col + 1];
-    neighboursArr[6] = matrix[row + 1]?.[col + 1];
-    neighboursArr[7] = matrix[row + 1]?.[col];
-
-    for (const neighbour of neighboursArr) {
-      if (neighbour) {
-        liveNeighboursCount = liveNeighboursCount + 1;
-      }
-    }
-
-    return liveNeighboursCount;
-  };
-
-  const isUnderpopulation = (
-    matrix: Matrix,
-    row: number,
-    col: number,
-    numOfLiveNeighbours: number
-  ): boolean => {
-    return !!(
-      matrix[row][col] && minLiveNeighboursToLive > numOfLiveNeighbours
-    );
-  };
-
-  const isOvercrowding = (
-    matrix: Matrix,
-    row: number,
-    col: number,
-    numOfLiveNeighbours: number
-  ): boolean => {
-    return !!(
-      matrix[row][col] && numOfLiveNeighbours > maxLiveNeighboursToLive
-    );
-  };
-
-  const isReproduction = (
-    matrix: Matrix,
-    row: number,
-    col: number,
-    numOfLiveNeighbours: number
-  ): boolean => {
-    return !!(
-      !matrix[row][col] && numOfLiveNeighbours === liveNeighboursToBecomeLive
-    );
-  };
 
   useEffect(() => {
     const tick = (matrix: Matrix) => {
@@ -124,11 +66,7 @@ export const MainView = ({
       <h1 className="header">Original Matrix:</h1>
       <Table matrix={originalMatrix} />
       <h1 className="header">After Matrix ticks:</h1>
-      {!isTickDone ? (
-        <Spinner />
-      ) : (
-        newMatrix && <Table testid="results target table" matrix={newMatrix} />
-      )}
+      {!isTickDone ? <Spinner /> : newMatrix && <Table matrix={newMatrix} />}
     </div>
   );
 };

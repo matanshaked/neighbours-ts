@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 import { TableData } from "../table-data/TableData.component";
 
 export const TableRow = ({
@@ -6,8 +8,8 @@ export const TableRow = ({
   tableRowData: number[];
 }): JSX.Element => (
   <tr>
-    {tableRowData.map((tableData, index) => (
-      <TableData key={index} tableData={tableData} />
+    {tableRowData.map((tableData) => (
+      <TableData key={uuidv4()} tableData={tableData} />
     ))}
   </tr>
 );
