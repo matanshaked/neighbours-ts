@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import { MainView } from "../components/main-view/MainView.component";
-import { mockOriginalMatrix } from "./TestMockData";
+import { mockOriginalMatrix } from "./testsMockData";
 import {
   getNumberOfLiveNeighbours,
   isUnderpopulation,
@@ -14,7 +14,7 @@ describe("Matrix ruls and logic", () => {
   const row: number = 2;
   const col: number = 2;
 
-  it("test Number Of Live Neighbours", () => {
+  it("Test Number Of Live Neighbours", () => {
     numberOfLiveNeighbours = getNumberOfLiveNeighbours(
       mockOriginalMatrix,
       row,
