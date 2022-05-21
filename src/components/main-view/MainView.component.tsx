@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { Table } from "../table/Table.component";
-import Spinner from "../spinner/Spinner.component";
 import { Matrix } from "../../DataStructures";
 import {
   getNumberOfLiveNeighbours,
@@ -17,7 +16,6 @@ export const MainView = ({
 }: {
   originalMatrix: Matrix;
 }): JSX.Element => {
-  const [isTickDone, setIsTickDone] = useState<boolean>(false);
   const [newMatrix, setNewMatrix] = useState<Matrix>();
 
   useEffect(() => {
@@ -55,7 +53,6 @@ export const MainView = ({
       }
 
       setNewMatrix(newMatrixInstance);
-      setIsTickDone(true);
     };
 
     tick(originalMatrix);
@@ -66,7 +63,7 @@ export const MainView = ({
       <h1 className="header">Original Matrix:</h1>
       <Table matrix={originalMatrix} />
       <h1 className="header">After Matrix ticks:</h1>
-      {!isTickDone ? <Spinner /> : newMatrix && <Table matrix={newMatrix} />}
+      {newMatrix && <Table matrix={newMatrix} />}
     </div>
   );
 };
